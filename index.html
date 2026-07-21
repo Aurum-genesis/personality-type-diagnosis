@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Диагностика личности — познай свои сильные стороны</title>
+<style>
+  :root {
+    --bg-0: #0b0f1a;
+    --bg-1: #111726;
+    --ink-0: #f0f5ff;
+    --ink-1: #dce3ed;
+    --ink-2: #95a0b8;
+    --line: #2a3447;
+    --accent: #60a5fa;
+    --green: #34d399;
+    --red: #f87171;
+    --card-bg: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    --radius: 14px;
+    --space: 24px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    background:
+      radial-gradient(1200px 800px at 20% -10%, #1a2540 0%, transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, #1a2a3d 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    color: var(--ink-1);
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 48px;
+    font-size: 15px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  h1 { text-align: center; font-weight: 600; font-size: 28px; line-height: 1.3; color: var(--ink-0); margin-bottom: 40px; }
+  .subtitle { text-align: center; color: var(--ink-2); font-size: 13px; margin-bottom: 56px; }
+
+  #start { animation: fadeUp 600ms cubic-bezier(.2,.7,.2,1) both; }
+  #start .start-headline {
+    text-align: center; font-weight: 600; font-size: 32px; line-height: 1.25;
+    color: var(--ink-0); margin: 24px 0 18px; letter-spacing: -0.01em;
+  }
+  #start .start-sub {
+    text-align: center; color: var(--ink-1); font-size: 15px; line-height: 1.6;
+    max-width: 520px; margin: 0 auto 36px;
+  }
+  #start .start-blocks { margin-top: 44px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; }
+  #start .start-block {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: linear-gradient(160deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.008) 100%);
+    margin-bottom: 10px; padding: 0;
+    transition: border-color 220ms, background 220ms;
+  }
+  #start .start-block[open] { border-color: rgba(96,165,250,0.25); background: rgba(96,165,250,0.04); }
+  #start .start-block summary {
+    padding: 16px 20px; cursor: pointer; font-weight: 600; color: var(--ink-0);
+    font-size: 15px; letter-spacing: 0.01em; list-style: none;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #start .start-block summary::-webkit-details-marker { display: none; }
+  #start .start-block summary::after {
+    content: "▾"; color: var(--accent); font-size: 14px; transition: transform 220ms;
+  }
+  #start .start-block[open] summary::after { transform: rotate(180deg); }
+  #start .start-block > *:not(summary) { padding: 0 20px 18px; }
+  #start .start-block p { color: var(--ink-1); font-size: 14px; line-height: 1.6; }
+  #start .start-block ul { list-style: none; padding: 0; margin: 0; }
+  #start .start-block li {
+    padding: 6px 0 6px 22px; position: relative; color: var(--ink-1);
+    font-size: 14px; line-height: 1.5;
+  }
+  #start .start-block li::before {
+    content: "—"; position: absolute; left: 0; top: 6px; color: var(--accent); font-weight: 600;
+  }
+  #start .start-block li strong { color: var(--ink-0); font-weight: 600; }
+  #start .btn-primary {
+    display: block; width: 100%; max-width: 360px; margin: 0 auto; padding: 16px 40px;
+    border: 1px solid rgba(232,237,247,0.16); border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    color: var(--ink-0); cursor: pointer; font-weight: 500; font-size: 15px;
+    letter-spacing: 0.04em; position: relative; overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: border-color 280ms, background 280ms, transform 220ms;
+  }
+  /* Тонкая акцентная линия сверху, "стекает" вниз при hover */
+  #start .btn-primary::before {
+    content: ""; position: absolute; left: 12%; right: 12%; top: 0; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(232,237,247,0.6) 50%, transparent 100%);
+    opacity: 0.5; transition: opacity 280ms, left 280ms, right 280ms;
+  }
+  #start .btn-primary:hover {
+    border-color: rgba(232,237,247,0.32);
+    background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+    transform: translateY(-1px);
+  }
+  #start .btn-primary:hover::before { opacity: 1; left: 4%; right: 4%; }
+  #start .btn-secondary {
+    display: inline-block; padding: 11px 22px; border: 1px solid var(--line);
+    border-radius: var(--radius); background: transparent; color: var(--ink-1);
+    cursor: pointer; font-size: 14px; transition: border-color 220ms, color 220ms, background 220ms;
+  }
+  #start .btn-secondary:hover { border-color: var(--accent); color: var(--accent); background: rgba(96,165,250,0.06); }
+
+  /* === «НЕЙРОН» — бегущий импульс под плашками === */
+  .neuron {
+    margin: 36px auto 0; max-width: 600px; height: 1px; position: relative;
+    background: linear-gradient(90deg, transparent 0%, rgba(232,237,247,0.10) 50%, transparent 100%);
+    overflow: hidden;
+  }
+  .neuron::before {
+    content: ""; position: absolute; top: -1px; left: -30%;
+    width: 30%; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(232,237,247,0.95) 50%, transparent 100%);
+    box-shadow: 0 0 12px 2px rgba(232,237,247,0.55), 0 0 24px 4px rgba(232,237,247,0.25);
+    animation: neuronRun 4.2s cubic-bezier(.4,0,.2,1) infinite;
+  }
+  @keyframes neuronRun {
+    0%   { left: -30%; }
+    100% { left: 100%; }
+  }
+
+  .progress { text-align: center; color: var(--ink-2); margin-bottom: 16px; }
+
+  #quiz { display: none; animation: fadeUp 400ms cubic-bezier(.2,.7,.2,1); }
+  .question-block {
+    margin-bottom: 24px; padding: 28px 26px;
+    background: linear-gradient(160deg, rgba(96,165,250,0.04) 0%, rgba(255,255,255,0.015) 60%);
+    border: 1px solid rgba(96,165,250,0.22);
+    border-radius: var(--radius);
+    box-shadow: 0 0 0 1px rgba(96,165,250,0.05), 0 12px 40px -16px rgba(96,165,250,0.25);
+    position: relative;
+  }
+  .question-block::before {
+    content: ""; position: absolute; inset: 0; border-radius: var(--radius);
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(96,165,250,0.08) 0%, transparent 30%);
+  }
+  .question-block p { font-weight: 600; color: var(--ink-0); margin-bottom: 18px; font-size: 16px; line-height: 1.5; }
+  .answers { display: flex; gap: 12px; }
+  .answers button {
+    flex: 1; padding: 20px 20px; border: 1px solid rgba(232,237,247,0.22); border-radius: var(--radius);
+    background: linear-gradient(160deg, rgba(96,165,250,0.10) 0%, rgba(96,165,250,0.04) 100%);
+    cursor: pointer; text-align: left;
+    color: var(--ink-0); font-size: 15px; line-height: 1.5; font-weight: 500;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: border-color 220ms, background 220ms, transform 220ms, box-shadow 220ms;
+  }
+  .answers button:hover {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, rgba(96,165,250,0.18) 0%, rgba(96,165,250,0.08) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -12px rgba(96,165,250,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  .bolivaya-options { display: flex; flex-direction: column; gap: 10px; }
+  .bolivaya-options button {
+    padding: 18px 22px; border: 1px solid rgba(232,237,247,0.22); border-radius: var(--radius);
+    background: linear-gradient(160deg, rgba(96,165,250,0.10) 0%, rgba(96,165,250,0.04) 100%);
+    cursor: pointer; text-align: left;
+    color: var(--ink-0); font-size: 15px; line-height: 1.5; font-weight: 500;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: border-color 220ms, background 220ms, transform 220ms, box-shadow 220ms;
+  }
+  .bolivaya-options button:hover {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, rgba(96,165,250,0.18) 0%, rgba(96,165,247,0.08) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px -12px rgba(96,165,250,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  /* === ПРОГРЕСС-КОЛЬЦО (как центральный круг в визуализации) === */
+  .progress-ring {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    margin: 0 auto 28px; padding: 6px 0;
+  }
+  .progress-ring svg { display: block; }
+  .progress-ring .ring-center {
+    position: absolute; transform: translate(-50%, -50%);
+    text-align: center; pointer-events: none;
+  }
+  .progress-ring .ring-center .pct { font-size: 18px; font-weight: 600; color: var(--ink-0); line-height: 1; }
+  .progress-ring .ring-center .lbl { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); margin-top: 2px; }
+  .progress-ring-wrap { position: relative; width: 72px; height: 72px; }
+  .progress-ring .ring-track { stroke: var(--line); fill: none; stroke-width: 4; }
+  .progress-ring .ring-fill {
+    stroke: var(--accent); fill: none; stroke-width: 4; stroke-linecap: round;
+    transform: rotate(-90deg); transform-origin: 50% 50%;
+    transition: stroke-dashoffset 600ms cubic-bezier(.2,.7,.2,1), stroke 400ms;
+    filter: drop-shadow(0 0 6px rgba(96,165,250,0.4));
+  }
+  .progress-ring .step-labels { display: flex; flex-direction: column; gap: 4px; }
+  .progress-ring .step-label {
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-2); padding: 3px 8px; border-radius: 999px;
+    border: 1px solid transparent; transition: color 220ms, border-color 220ms, background 220ms;
+  }
+  .progress-ring .step-label.active { color: var(--ink-0); border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.08); }
+  .progress-ring .step-label.done   { color: var(--ink-1); }
+
+  /* === ОРБИТА ФУНКЦИЙ НА ЭКРАНЕ РЕЗУЛЬТАТА === */
+  .orbit-wrap {
+    position: relative; aspect-ratio: 1 / 1; max-width: 420px;
+    margin: 16px auto 8px;
+  }
+  .orbit-wrap svg.orbit-links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .orbit-wrap .orbit-center {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    width: 128px; height: 128px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background: radial-gradient(circle at 30% 30%, var(--quad-accent, var(--accent)) 0%, rgba(0,0,0,0.5) 70%);
+    color: #0b0f1a; font-weight: 700; font-size: 20px; letter-spacing: 0.04em;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 20px 60px -20px var(--quad-accent, var(--accent));
+    border: 1px solid rgba(255,255,255,0.18);
+    animation: centerPulse 4s ease-in-out infinite;
+    z-index: 2;
+  }
+  .orbit-wrap .orbit-center .small { display:block; font-size: 10px; font-weight: 500; opacity: 0.75; margin-top: 2px; letter-spacing: 0.08em; text-transform: uppercase; }
+  @keyframes centerPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50%      { transform: translate(-50%, -50%) scale(1.04); }
+  }
+  .orbit-node {
+    position: absolute; transform: translate(-50%,-50%);
+    width: 72px; height: 72px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-weight: 600; font-size: 13px; letter-spacing: 0.02em;
+    background: var(--bg-1); color: var(--ink-0);
+    border: 1px solid var(--line);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.02);
+    animation: nodeIn 500ms cubic-bezier(.2,.7,.2,1) both;
+    z-index: 1;
+  }
+  .orbit-node.strong { color: var(--green); border-color: rgba(52,211,153,0.35); }
+  .orbit-node.weak   { color: var(--red);   border-color: rgba(248,113,113,0.35); opacity: 0.85; }
+  .orbit-node .code  { font-size: 14px; font-weight: 700; line-height: 1; }
+  .orbit-node .pos   { display: block; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); margin-top: 3px; }
+  @keyframes nodeIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  .orbit-wrap svg.orbit-links .orbit-link {
+    fill: none; stroke-width: 1.4; stroke-linecap: round;
+    opacity: 0.5; transition: opacity 220ms, stroke-width 220ms;
+  }
+  .orbit-wrap svg.orbit-links .orbit-link.strong {
+    animation: orbitBreatheStrong var(--pulse, 4s) ease-in-out infinite;
+  }
+  .orbit-wrap svg.orbit-links .orbit-link.weak {
+    animation: orbitBreatheWeak var(--pulse, 2.2s) ease-in-out infinite;
+    opacity: 0.3;
+  }
+  @keyframes orbitBreatheStrong {
+    0%, 100% { opacity: 0.35; stroke-width: 1.2; }
+    50%      { opacity: 0.9;  stroke-width: 1.8; }
+  }
+  @keyframes orbitBreatheWeak {
+    0%, 100% { opacity: 0.15; stroke-width: 1; }
+    50%      { opacity: 0.5;  stroke-width: 1.4; }
+  }
+  .orbit-legend {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 16px;
+    margin-top: 12px; font-size: 12px; color: var(--ink-1);
+  }
+  .orbit-legend .item { display: inline-flex; align-items: center; gap: 6px; }
+  .orbit-legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .orbit-legend .quad-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+
+  /* === РАДАР-ГРАФИК ПЛАНА — ПЛАВНАЯ ОТРИСОВКА === */
+  #radarChart { transition: none; }
+  .radar-anim .radar-poly { animation: radarGrow 800ms cubic-bezier(.2,.7,.2,1) both; transform-origin: 50% 50%; }
+  .radar-anim .radar-point { animation: radarDot 400ms cubic-bezier(.2,.7,.2,1) both; transform-origin: 50% 50%; }
+  @keyframes radarGrow {
+    from { transform: scale(0.2); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  @keyframes radarDot {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  /* === УВЕДОМЛЕНИЯ О ПЕРЕХОДАХ === */
+  .step-transition { animation: stepIn 500ms cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  #result { display: none; padding: 20px 0; animation: fadeUp 500ms cubic-bezier(.2,.7,.2,1); }
+
+  .type-header { text-align: center; margin-bottom: 28px; }
+  .type-header h2 { font-weight: 600; font-size: 28px; color: var(--ink-0); margin-bottom: 4px; }
+  .type-header .type-nick { color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+  .type-header .type-full { color: var(--ink-2); font-size: 13px; }
+
+  .fn-table { max-width: 500px; }
+  .fn-table div { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .fn-table .fn-label { min-width: 180px; color: var(--ink-1); }
+  .fn-table .fn-score { min-width: 30px; text-align: right; color: var(--ink-2); margin-right: 8px; }
+  .fn-table .bar-bg { flex: 1; height: 6px; background: var(--line); border-radius: 3px; max-width: 120px; }
+  .fn-table .bar-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+
+  .restart-btn { display: block; margin: 0 auto; padding: 10px 28px; border: 1px solid var(--line); background: transparent; border-radius: var(--radius); cursor: pointer; color: var(--ink-2); transition: border-color 220ms, color 220ms; }
+  .restart-btn:hover { border-color: var(--ink-1); color: var(--ink-1); }
+
+  .type-selector { display:none; padding:20px 0; }
+  .type-selector h2 { text-align:center; margin-bottom:16px; color: var(--ink-0); font-weight:600; }
+  .type-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; max-width:480px; margin:0 auto; }
+  .type-grid button {
+    padding:12px 6px; border:1px solid var(--line); border-radius:var(--radius); background:var(--card-bg);
+    cursor:pointer; text-align:center; transition:border-color 220ms, background 220ms, transform 220ms, box-shadow 220ms;
+    color: var(--ink-1); position:relative; overflow:hidden;
+  }
+  .type-grid button::before { content:""; position:absolute; inset:0; border-radius:var(--radius); pointer-events:none; background:linear-gradient(160deg, rgba(255,255,255,0.02) 0%, transparent 60%); }
+  .type-grid button:hover { border-color:var(--accent); background:rgba(96,165,250,0.08); transform: translateY(-1px); box-shadow: 0 4px 20px -8px rgba(96,165,250,0.15); }
+  .type-grid button .t-code { font-weight:600; display:block; color: var(--ink-0); }
+  .type-grid button .t-nick { display:block; color:var(--ink-2); }
+
+  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:100; overflow-y:auto; padding:20px; }
+  .modal-overlay.open { display:flex; align-items:flex-start; justify-content:center; }
+  .modal-content { background:var(--card-bg); border:1px solid var(--line); border-radius:14px; max-width:680px; width:100%; padding:28px; margin:20px 0; box-shadow:0 16px 80px rgba(0,0,0,0.6); }
+  .modal-content h2 { font-weight:600; color: var(--ink-0); margin-bottom:4px; }
+  .modal-content .principle { color:var(--ink-2); margin-bottom:20px; padding:16px 18px; background:var(--card-bg); border:1px solid var(--line); border-radius:var(--radius); }
+  .modal-close { float:right; background:none; border:none; font-size:24px; cursor:pointer; color:var(--ink-2); transition: color 220ms; line-height: 1; }
+  .modal-close:hover { color:var(--ink-0); }
+  .fn-block { margin-bottom:20px; padding:16px; border:1px solid var(--line); border-radius:var(--radius); background:var(--card-bg); }
+  .fn-block.strong { border-left:3px solid var(--green); }
+  .fn-block.weak { border-left:3px solid var(--red); }
+  .fn-block .fn-title { font-weight:600; color: var(--ink-0); margin-bottom:4px; }
+  .fn-block .fn-pos { color:var(--ink-2); }
+  .fn-block .fn-desc { color:var(--ink-1); margin:6px 0 10px; }
+  .levels-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .level-btn { flex:1; min-width:80px; padding:8px; border:1px solid var(--line); border-radius:var(--radius); background:transparent; cursor:pointer; text-align:center; transition:border-color 220ms, background 220ms; color: var(--ink-1); }
+  .level-btn:hover { border-color:var(--ink-1); }
+  .level-btn.selected { border-color:var(--accent); background:rgba(96,165,250,0.12); }
+  .level-btn .level-num { font-weight:600; display:block; color: var(--ink-0); }
+  .level-btn .level-name { display:block; color:var(--ink-1); margin:2px 0; }
+  .level-btn .level-short { display:block; color:var(--ink-2); }
+  .modal-actions { text-align:center; margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .modal-actions button { padding:10px 24px; border:1px solid var(--line); border-radius:var(--radius); background:transparent; color:var(--ink-1); cursor:pointer; transition: border-color 220ms, color 220ms; }
+  .modal-actions button:hover { border-color:var(--accent); color:var(--accent); }
+  .modal-actions button.primary { border:none; background:var(--accent); color:#0b0f1a; font-weight:600; }
+  .modal-actions button.primary:hover { background:#7ab4ff; color:#0b0f1a; }
+  .chart-section { display:none; margin-top:20px; text-align:center; }
+  .chart-section canvas { max-width:100%; }
+  .chart-section .fn-legend { display:flex; flex-wrap:wrap; gap:6px 14px; justify-content:center; margin-top:10px; color:var(--ink-1); }
+  .chart-section .fn-legend span { display:inline-flex; align-items:center; gap:4px; }
+  .chart-section .fn-legend .dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div id="start">
+  <h1 class="start-headline">Почему одни задачи<br>вдохновляют, а другие — выматывают?</h1>
+  <p class="start-sub">Персональная диагностика личности на основе соционической типологии. 8 минут — и вы узнаете свой тип, сильные стороны и план развития.</p>
+
+  <button class="btn-primary" onclick="startTest()">Начать диагностику</button>
+
+  <div style="text-align:center;margin-top:14px;">
+    <button class="btn-secondary" onclick="showTypeSelector()">Я уже знаю свой тип →</button>
+  </div>
+
+  <div class="start-blocks">
+    <details class="start-block">
+      <summary>Что вы получите</summary>
+      <ul>
+        <li><strong>Ваш тип личности</strong> — описание особенностей мышления, принятия решений, общения.</li>
+        <li><strong>Сильные стороны</strong> — на что можно уверенно опираться в работе и отношениях.</li>
+        <li><strong>Источники стресса и зоны роста</strong> — что вас истощает и как этого избежать.</li>
+        <li><strong>Персональный план развития</strong> — практические шаги на 4 месяца.</li>
+        <li><strong>PDF-отчёт</strong> — можно скачать и использовать как руководство.</li>
+      </ul>
+    </details>
+
+    <details class="start-block">
+      <summary>Как это работает</summary>
+      <p>Вы отвечаете на короткие вопросы о себе. После каждого шага видите промежуточный результат и понимаете, как сужается круг. В финале — ваш тип, описание и план развития с радар-графиком функций.</p>
+    </details>
+
+    <details class="start-block">
+      <summary>На чём основано</summary>
+      <p>Методика основана на соционике — типологии личности, описывающей 16 типов через 8 функций. Близка по принципам к MBTI, но более структурирована: учитывает не только 4 дихотомии, но и положение каждой функции в стеке.</p>
+    </details>
+  </div>
+
+  <div class="neuron" aria-hidden="true"></div>
+</div>
+
+<div id="typeSelector" class="type-selector">
+  <h2>Выберите свой тип</h2>
+  <div class="type-grid" id="typeGrid"></div>
+  <div style="text-align:center;margin-top:16px;">
+    <button class="restart-btn" onclick="location.reload()">← Назад</button>
+  </div>
+</div>
+
+<div id="quiz"></div>
+<div id="progress" class="progress"></div>
+
+<div id="result"></div>
+
+<script src="pdf_data.js"></script>
+<script>
+// === КВАДРЫ (для цвета центрального круга на экране результата) ===
+const QUAD = {
+  alpha: { tag:'alpha', accent:'#6ee7b7', soft:'rgba(110, 231, 183, 0.10)' },
+  beta:  { tag:'beta',  accent:'#60a5fa', soft:'rgba(96, 165, 250, 0.10)' },
+  gamma: { tag:'gamma', accent:'#fbbf24', soft:'rgba(251, 191, 36, 0.10)' },
+  delta: { tag:'delta', accent:'#f87171', soft:'rgba(248, 113, 113, 0.10)' },
+};
+// Коды → квадра (источник: Соционика/визуализация/index.html, порядок TYPES)
+const TYPE_QUAD = {
+  'ЛИИ':'delta', 'ЭСЭ':'alpha', 'ЭИЭ':'alpha', 'СЭИ':'delta',
+  'ИЛЭ':'delta', 'ЛСЭ':'beta',  'ИЛИ':'alpha', 'ЛСИ':'gamma',
+  'ЭИИ':'beta',  'ЛИЭ':'gamma', 'ЭСИ':'beta',  'СЭЭ':'gamma',
+  'ИЭИ':'beta',  'СЛИ':'delta', 'ИЭЭ':'gamma', 'СЛЭ':'gamma',
+};
+
+// === БАЗА ТИПОВ ===
+const allTypes = [
+  { code:'ИЛЭ', nick:'Дон Кихот',     full:'Интуитивно-логический экстраверт',  ei:'E', stack:['Ne','Ti','Se','Fi','Si','Fe','Ni','Te'] },
+  { code:'СЭИ', nick:'Дюма',           full:'Сенсорно-этический интроверт',      ei:'I', stack:['Si','Fe','Ti','Te','Ni','Ne','Fi','Se'] },
+  { code:'ЭСЭ', nick:'Гюго',           full:'Этико-сенсорный экстраверт',       ei:'E', stack:['Fe','Si','Te','Ni','Ne','Ti','Fi','Se'] },
+  { code:'ЛИИ', nick:'Робеспьер',      full:'Логико-интуитивный интроверт',     ei:'I', stack:['Ti','Ne','Fi','Se','Fe','Si','Te','Ni'] },
+  { code:'ЭИЭ', nick:'Гамлет',         full:'Этико-интуитивный экстраверт',     ei:'E', stack:['Fe','Ni','Te','Si','Ti','Se','Fi','Ne'] },
+  { code:'ЛСИ', nick:'Горький',        full:'Логико-сенсорный интроверт',       ei:'I', stack:['Ti','Se','Ne','Ni','Fe','Si','Te','Fi'] },
+  { code:'СЭЭ', nick:'Наполеон',       full:'Сенсорно-этический экстраверт',     ei:'E', stack:['Se','Fi','Ne','Ti','Ni','Te','Si','Fe'] },
+  { code:'ИЛИ', nick:'Бальзак',        full:'Интуитивно-логический интроверт',  ei:'I', stack:['Ni','Te','Si','Fe','Se','Fi','Ne','Ti'] },
+  { code:'ИЭЭ', nick:'Гексли',         full:'Интуитивно-этический экстраверт',   ei:'E', stack:['Ne','Fi','Se','Ti','Si','Te','Ni','Fe'] },
+  { code:'СЛИ', nick:'Габен',          full:'Сенсорно-логический интроверт',     ei:'I', stack:['Si','Te','Ni','Fe','Ne','Fi','Se','Ti'] },
+  { code:'ЛИЭ', nick:'Джек Лондон',    full:'Логико-интуитивный экстраверт',     ei:'E', stack:['Te','Ni','Fe','Si','Fi','Se','Ti','Ne'] },
+  { code:'ЭСИ', nick:'Драйзер',        full:'Этико-сенсорный интроверт',        ei:'I', stack:['Fi','Se','Ti','Ne','Te','Si','Fe','Ni'] },
+  { code:'ИЭИ', nick:'Есенин',         full:'Интуитивно-этический интроверт',    ei:'I', stack:['Ni','Fe','Si','Te','Se','Ti','Ne','Fi'] },
+  { code:'СЛЭ', nick:'Жуков',          full:'Сенсорно-логический экстраверт',    ei:'E', stack:['Se','Ti','Ne','Fi','Ni','Fe','Si','Te'] },
+  { code:'ЛСЭ', nick:'Штирлиц',        full:'Логико-сенсорный экстраверт',       ei:'E', stack:['Te','Si','Fe','Ni','Fi','Ne','Ti','Se'] },
+  { code:'ЭИИ', nick:'Достоевский',    full:'Этико-интуитивный интроверт',       ei:'I', stack:['Fi','Ne','Ti','Se','Te','Si','Fe','Ni'] },
+];
+
+const typeDescriptions = {
+  'ИЛЭ': 'Генератор идей. Любит новые возможности, нестандартные ходы, мозговые штурмы. Быстро загорается, но может не доводить до конца. Вдохновляет других на смелые проекты.',
+  'СЭИ': 'Мастер уюта и комфорта. Замечает мелочи, которые делают жизнь приятной. Не любит конфликтов, сглаживает углы. Ценит стабильность, привычный уклад, вкусную еду и красивые вещи.',
+  'ЭСЭ': 'Душа компании. Создаёт вокруг себя тёплую эмоциональную атмосферу. Щедрый, заботливый, любит праздники и сюрпризы. Остро чувствует настроение других людей.',
+  'ЛИИ': 'Аналитик-системщик. Стремится понять, как устроен мир, выстроить чёткую логическую картину. Объективен, принципиален, не идёт на компромиссы в том, что считает истиной.',
+  'ЭИЭ': 'Трагический романтик. Живёт яркими эмоциями, драмой, предчувствиями. Часто драматизирует, но делает это красиво. Хорошо чувствует время — знает, когда наступать, когда ждать.',
+  'ЛСИ': 'Приверженец порядка и дисциплины. Чётко соблюдает правила и требует того же от других. Надёжный, ответственный, жёсткий, когда нужно навести порядок. Ценит иерархию.',
+  'СЭЭ': 'Лидер-прагматик. Нацелен на результат, статус, влияние. Умеет добиваться своего, продавливать решения. Энергичный, волевой, не боится конкуренции. Любит красивую жизнь.',
+  'ИЛИ': 'Стратег-пессимист. Просчитывает сценарии на шаги и годы вперёд. Видит риски и подводные камни, куда другие не заглядывают. Скептичен, немногословен, но его прогнозы обычно сбываются.',
+  'ИЭЭ': 'Коммуникатор-энтузиаст. Легко заводит знакомства, обаятелен, находчив. Видит в людях потенциал, умеет вдохновить на развитие. Не любит рутины, быстро переключается между делами.',
+  'СЛИ': 'Надёжный мастер. Практичен, руки из нужного места, всё доводит до ума. Независим, не любит, когда указывают. Лучше один раз сделать, чем сто раз обсудить. Ценит качество.',
+  'ЛИЭ': 'Деловой организатор. Постоянно в движении, ставит цели и достигает их. Эффективен, рационален, не терпит пустой болтовни. Любит скорость, новые проекты, соревновательный дух.',
+  'ЭСИ': 'Хранитель отношений. Верен своим принципам и близким людям. Требователен к моральным качествам, не прощает предательства. Выдержан, дисциплинирован, держит слово.',
+  'ИЭИ': 'Мечтатель-лирик. Живёт в мире грёз, образов и предчувствий. Мягкий, утончённый, ранимый. Хорошо чувствует красоту, гармонию, время. Нуждается в поддержке и тёплой атмосфере.',
+  'СЛЭ': 'Волевой стратег. Ставит жёсткие цели и добивается их любой ценой. Решителен, напорист, не боится конфликтов. Прирождённый руководитель, который берёт ответственность.',
+  'ЛСЭ': 'Деловой перфекционист. Систематичен, трудолюбив, доводит начатое до идеала. Любит чёткость, регламенты, рабочий порядок. Надёжный партнёр — если взялся, сделает качественно.',
+  'ЭИИ': 'Тонкий психолог. Разбирается в людях, чувствует их истинные мотивы. Доброжелателен, тактичен, избегает давления. Ценит глубокие, искренние отношения. Готов помогать и поддерживать.',
+};
+
+// Описания функций в сильных и слабых позициях
+const fnTraits = {
+  Ti: { name:'Логика соотношений', strong:'Видеть структуру и логику, анализировать системы', weak:'Выстраивать строгую логику, аргументировать последовательно' },
+  Te: { name:'Деловая логика', strong:'Добиваться результата, организовывать дела, быть эффективным', weak:'Организовывать дела, добиваться практической пользы' },
+  Ni: { name:'Интуиция времени', strong:'Прогнозировать, чувствовать тенденции и развитие событий', weak:'Прогнозировать, понимать, к чему всё движется' },
+  Ne: { name:'Интуиция возможностей', strong:'Генерировать идеи, видеть возможности и альтернативы', weak:'Видеть варианты, придумывать новое' },
+  Si: { name:'Сенсорика ощущений', strong:'Создавать уют и комфорт, заботиться о теле и здоровье', weak:'Заботиться о комфорте, здоровье, чувствовать тело' },
+  Se: { name:'Волевая сенсорика', strong:'Проявлять волю, действовать решительно, влиять на ситуацию', weak:'Проявлять волю, отстаивать границы, действовать напористо' },
+  Fi: { name:'Этика отношений', strong:'Понимать людей, строить глубокие отношения, быть верным', weak:'Разбираться в отношениях, доверять, понимать чувства' },
+  Fe: { name:'Этика эмоций', strong:'Создавать настроение, управлять эмоциями, вовлекать людей', weak:'Управлять эмоциями, создавать и поддерживать атмосферу' },
+};
+
+// Описания уровней для каждой функции (из Методика_v2.md раздел 7)
+const levelData = {
+  Ti: { name:'Логика соотношений', desc:'Способность видеть структуру, логические связи, выстраивать аргументацию.',
+    levels:[
+      'Не видит логических связей, не может выстроить аргументацию. Решения принимает хаотично или полагаясь на авторитет',
+      'Может логически мыслить в знакомых рамках. Если тема новая или сложная — теряется, путается',
+      'Хорошо анализирует, строит стройные логические конструкции. Видит противоречия в рассуждениях других',
+      'Создаёт новые логические системы, методологии, классификации. Видит неочевидные связи, формирует школы мысли']},
+  Te: { name:'Деловая логика', desc:'Способность организовать дела, добиваться результата, управлять ресурсами.',
+    levels:[
+      'Ничего не может организовать. Дела валятся из рук, сроки срываются',
+      'Справляется с обычными бытовыми задачами. Масштабные проекты даются с трудом',
+      'Эффективно организует процессы, ставит цели и достигает их. Хорошо управляет временем и ресурсами',
+      'Создаёт новые методы работы, оптимизирует сложные системы. Природный организатор и предприниматель']},
+  Ni: { name:'Интуиция времени', desc:'Способность прогнозировать, чувствовать тенденции, видеть развитие событий.',
+    levels:[
+      'Живёт одним днём, не видит перспективы. Постоянно опаздывает, не чувствует время',
+      'Может планировать на ближайшее будущее (неделя-месяц). Дальние горизонты не видит',
+      'Хорошо прогнозирует, чувствует тенденции. Знает, когда наступать, когда ждать',
+      'Видит развитие событий на годы вперёд. Стратег, провидец, создаёт долгосрочные концепции']},
+  Ne: { name:'Интуиция возможностей', desc:'Способность видеть варианты, альтернативы, генерировать идеи.',
+    levels:[
+      'Не видит альтернатив, мыслит шаблонно. Любая новая задача ставит в тупик',
+      'Может придумать 2–3 варианта в знакомой области. В незнакомой — теряется',
+      'Генерирует множество идей, видит нестандартные решения. Хорош в мозговых штурмах',
+      'Создаёт прорывные концепции, изобретает. Видит возможности там, где другие видят тупик']},
+  Si: { name:'Сенсорика ощущений', desc:'Способность заботиться о комфорте, здоровье, чувствовать тело, создавать гармонию.',
+    levels:[
+      'Не замечает дискомфорта, запускает здоровье. Живёт в хаосе и беспорядке',
+      'Поддерживает базовый комфорт и здоровье. Умеет обустроить быт на приемлемом уровне',
+      'Создаёт гармоничное пространство, хорошо чувствует тело. Разбирается в качестве вещей и еды',
+      'Создаёт произведения искусства, дизайн, кулинарные шедевры. Мастер эстетики и комфорта']},
+  Se: { name:'Волевая сенсорика', desc:'Способность проявлять волю, действовать решительно, влиять на ситуацию, отстаивать границы.',
+    levels:[
+      'Не может постоять за себя, пасует перед давлением. Границы постоянно нарушают',
+      'Может отстоять свои интересы в привычных ситуациях. В конфликте — уходит или уступает',
+      'Умеет влиять на людей, добиваться своего. Хорошо чувствует дистанцию и иерархию',
+      'Природный лидер, ведёт за собой. Не боится конфликтов, берёт ответственность в кризисах']},
+  Fi: { name:'Этика отношений', desc:'Способность понимать людей, строить глубокие отношения, быть верным, разбираться в чувствах.',
+    levels:[
+      'Не понимает своих чувств и чужих. Отношения поверхностные или созависимые',
+      'Имеет близкий круг, но в сложных этических ситуациях теряется. Принимает всё близко к сердцу',
+      'Хорошо понимает людей, строит крепкие отношения. Разбирается в мотивах и чувствах',
+      'Глубокий психолог, создаёт этические системы. Помогает людям разобраться в себе']},
+  Fe: { name:'Этика эмоций', desc:'Способность управлять эмоциями, создавать настроение, вовлекать людей, поддерживать атмосферу.',
+    levels:[
+      'Не управляет эмоциями, не чувствует настроения других. Эмоционально глух',
+      'Может поддержать разговор, но не создаёт атмосферу. Сильные эмоции выбивают из колеи',
+      'Хорошо управляет эмоциями группы, создаёт настроение. Заряжает других',
+      'Артист, оратор, вдохновляет массы. Может управлять эмоциональным состоянием зала']},
+};
+
+const levelNames = ['Примитивный','Нормальный','Развитый','Творческий'];
+
+function isSensorType(t) {
+  return ['Si','Se'].includes(t.stack[0]) || ['Si','Se'].includes(t.stack[1]);
+}
+function isIntuitiveType(t) {
+  return ['Ni','Ne'].includes(t.stack[0]) || ['Ni','Ne'].includes(t.stack[1]);
+}
+function isLogicType(t) {
+  return ['Ti','Te'].includes(t.stack[0]) || ['Ti','Te'].includes(t.stack[1]);
+}
+function isEthicType(t) {
+  return ['Fi','Fe'].includes(t.stack[0]) || ['Fi','Fe'].includes(t.stack[1]);
+}
+
+// === ВОПРОСЫ ===
+// Шаг 1: I/E
+const ieQuestions = [
+  { q:'После шумной компании ты…',                     i:'Чувствуешь, что силы на исходе — хочется тишины', e:'Заряжаешься — готов к новым встречам' },
+  { q:'Тебе ближе…',                                    e:'Попробовать много разных дел',                     i:'Глубоко разобраться в одной теме' },
+  { q:'В выходной ты скорее…',                          i:'Останешься дома с книгой/фильмом/хобби',         e:'Пойдёшь куда-то — встретиться с друзьями, на мероприятие' },
+];
+
+// Шаг 2: S/N
+const snQuestions = [
+  { q:'Читая статью или смотря фильм, ты запоминаешь…', aKey:'s', a:'Конкретные факты и детали',        bKey:'n', b:'Общую идею и смысл' },
+  { q:'Тебя больше увлекает…',                          aKey:'n', a:'То, что могло бы быть',             bKey:'s', b:'То, что есть здесь и сейчас' },
+  { q:'Планируя, ты больше учитываешь…',                aKey:'s', a:'Проверенный опыт и подтверждённые факты', bKey:'n', b:'Прогнозы, идеи, возможные сценарии' },
+];
+
+// Шаг 3: T/F
+const tfQuestions = [
+  { q:'В споре ты чаще исходишь из…',                          aKey:'t', a:'Объективных фактов и логики', bKey:'f', b:'Отношений между людьми и чувств' },
+  { q:'Люди ценят тебя больше за…',                            aKey:'t', a:'Справедливость и прямоту',   bKey:'f', b:'Доброту и понимание' },
+  { q:'Принимая решение, ты чаще всего…',                      aKey:'t', a:'Анализируешь последствия и логику', bKey:'f', b:'Оцениваешь, как оно повлияет на людей' },
+];
+
+// === БЛОК 2 — данные по группам ===
+const block2Questions = {
+  'ИЛИ-ЛИИ': [
+    { type:'pair', q:'Когда решаешь задачу, что для тебя важнее?',        a:{text:'Понять внутреннюю структуру и логику',fn:'Ti',win:'ЛИИ'}, b:{text:'Найти практичное решение, которое сработает',fn:'Te',win:'ИЛИ'} },
+    { type:'pair', q:'Что для тебя более убедительно?',                    a:{text:'Чёткая аргументация и доказательства',fn:'Ti',win:'ЛИИ'}, b:{text:'Конкретные факты и цифры',fn:'Te',win:'ИЛИ'} },
+    { type:'pair', q:'Ты чаще задумываешься о…',                           a:{text:'О том, как одно событие вытекает из другого — цепочка',fn:'Ni',win:'ИЛИ'}, b:{text:'О том, сколько разных вариантов развития возможно',fn:'Ne',win:'ЛИИ'} },
+    { type:'pair', q:'Что тебе ближе?',                                     a:{text:'Предчувствие — знаешь, что будет, но не можешь объяснить',fn:'Ni',win:'ИЛИ'}, b:{text:'Генерация идей — видишь множество возможностей',fn:'Ne',win:'ЛИИ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Мне нравится раскладывать всё по полочкам, находить логику и чёткие взаимосвязи',fn:'Ti',win:'ЛИИ'},
+        {text:'Мне нравится делать дела, добиваться результата и видеть пользу от своих действий',fn:'Te',win:'ИЛИ'},
+        {text:'Я часто чувствую, куда всё движется, улавливаю тенденции и глубинный смысл',fn:'Ni',win:'ИЛИ'},
+        {text:'Я вижу много возможностей, мне легко придумывать новое и находить варианты',fn:'Ne',win:'ЛИИ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда на меня давят, ломают, заставляют силой',fn:'Se',win:'ЛИИ'},
+        {text:'Когда вокруг мрачная атмосфера, нет радости и тепла',fn:'Fe',win:'ИЛИ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда вокруг спокойно, радостно, оптимистично',fn:'Fe',win:'ЛИИ'},
+        {text:'Когда могу действовать, двигаться, влиять',fn:'Se',win:'ИЛИ'}
+      ]},
+  ],
+  'ИЭИ-ЭИИ': [
+    { type:'pair', q:'В дружбе для тебя важнее…',                           a:{text:'Глубина — доверие, искренность, близость',fn:'Fi',win:'ЭИИ'}, b:{text:'Атмосфера — чтобы вместе было хорошо и легко',fn:'Fe',win:'ИЭИ'} },
+    { type:'pair', q:'Что для тебя ценнее?',                                 a:{text:'Когда человек помнит мелочи о тебе',fn:'Fi',win:'ЭИИ'}, b:{text:'Когда человек поддерживает хорошую атмосферу',fn:'Fe',win:'ИЭИ'} },
+    { type:'pair', q:'Ты чаще задумываешься о…',                           a:{text:'О том, как одно событие вытекает из другого — цепочка',fn:'Ni',win:'ИЭИ'}, b:{text:'О том, сколько разных вариантов развития возможно',fn:'Ne',win:'ЭИИ'} },
+    { type:'pair', q:'Что тебе ближе?',                                     a:{text:'Предчувствие — знаешь, что будет, но не можешь объяснить',fn:'Ni',win:'ИЭИ'}, b:{text:'Генерация идей — видишь множество возможностей',fn:'Ne',win:'ЭИИ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Я часто чувствую, куда всё движется, улавливаю тенденции и глубинный смысл',fn:'Ni',win:'ИЭИ'},
+        {text:'Я создаю настроение вокруг, мне важно, чтобы всем было хорошо',fn:'Fe',win:'ИЭИ'},
+        {text:'Для меня важны глубокая близость, доверие и искренность в отношениях',fn:'Fi',win:'ЭИИ'},
+        {text:'Я вижу много возможностей, мне легко придумывать новое и находить варианты',fn:'Ne',win:'ЭИИ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда всё вокруг бесполезно, нет результата и толку',fn:'Te',win:'ИЭИ'},
+        {text:'Когда на меня давят, ломают, заставляют силой',fn:'Se',win:'ЭИИ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда могу действовать, двигаться, влиять',fn:'Se',win:'ИЭИ'},
+        {text:'Когда вижу конкретный результат и пользу',fn:'Te',win:'ЭИИ'}
+      ]},
+  ],
+  'ИЛЭ-ЛИЭ': [
+    { type:'pair', q:'Когда решаешь задачу, что для тебя важнее?',        a:{text:'Понять внутреннюю структуру и логику',fn:'Ti',win:'ИЛЭ'}, b:{text:'Найти практичное решение, которое сработает',fn:'Te',win:'ЛИЭ'} },
+    { type:'pair', q:'Что для тебя более убедительно?',                    a:{text:'Чёткая аргументация и доказательства',fn:'Ti',win:'ИЛЭ'}, b:{text:'Конкретные факты и цифры',fn:'Te',win:'ЛИЭ'} },
+    { type:'pair', q:'Ты чаще задумываешься о…',                           a:{text:'О том, как одно событие вытекает из другого — цепочка',fn:'Ni',win:'ЛИЭ'}, b:{text:'О том, сколько разных вариантов развития возможно',fn:'Ne',win:'ИЛЭ'} },
+    { type:'pair', q:'Что тебе ближе?',                                     a:{text:'Предчувствие — знаешь, что будет, но не можешь объяснить',fn:'Ni',win:'ЛИЭ'}, b:{text:'Генерация идей — видишь множество возможностей',fn:'Ne',win:'ИЛЭ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Я вижу много возможностей, мне легко придумывать новое и находить варианты',fn:'Ne',win:'ИЛЭ'},
+        {text:'Мне нравится раскладывать всё по полочкам, находить логику и чёткие взаимосвязи',fn:'Ti',win:'ИЛЭ'},
+        {text:'Мне нравится делать дела, добиваться результата и видеть пользу от своих действий',fn:'Te',win:'ЛИЭ'},
+        {text:'Я часто чувствую, куда всё движется, улавливаю тенденции и глубинный смысл',fn:'Ni',win:'ЛИЭ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда меня не понимают глубоко, чувствую себя одиноким',fn:'Fi',win:'ИЛЭ'},
+        {text:'Когда нет комфорта, не уютно, тело страдает',fn:'Si',win:'ЛИЭ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда уютно, вкусно поел, тело расслабилось',fn:'Si',win:'ИЛЭ'},
+        {text:'Когда меня любят и ценят',fn:'Fi',win:'ЛИЭ'}
+      ]},
+  ],
+  'ИЭЭ-ЭИЭ': [
+    { type:'pair', q:'В дружбе для тебя важнее…',                           a:{text:'Глубина — доверие, искренность, близость',fn:'Fi',win:'ИЭЭ'}, b:{text:'Атмосфера — чтобы вместе было хорошо и легко',fn:'Fe',win:'ЭИЭ'} },
+    { type:'pair', q:'Что для тебя ценнее?',                                 a:{text:'Когда человек помнит мелочи о тебе',fn:'Fi',win:'ИЭЭ'}, b:{text:'Когда человек поддерживает хорошую атмосферу',fn:'Fe',win:'ЭИЭ'} },
+    { type:'pair', q:'Ты чаще задумываешься о…',                           a:{text:'О том, как одно событие вытекает из другого — цепочка',fn:'Ni',win:'ЭИЭ'}, b:{text:'О том, сколько разных вариантов развития возможно',fn:'Ne',win:'ИЭЭ'} },
+    { type:'pair', q:'Что тебе ближе?',                                     a:{text:'Предчувствие — знаешь, что будет, но не можешь объяснить',fn:'Ni',win:'ЭИЭ'}, b:{text:'Генерация идей — видишь множество возможностей',fn:'Ne',win:'ИЭЭ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Я создаю настроение вокруг, мне важно, чтобы всем было хорошо',fn:'Fe',win:'ЭИЭ'},
+        {text:'Я часто чувствую, куда всё движется, улавливаю тенденции и глубинный смысл',fn:'Ni',win:'ЭИЭ'},
+        {text:'Я вижу много возможностей, мне легко придумывать новое и находить варианты',fn:'Ne',win:'ИЭЭ'},
+        {text:'Для меня важны глубокая близость, доверие и искренность в отношениях',fn:'Fi',win:'ИЭЭ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда нет комфорта, не уютно, тело страдает',fn:'Si',win:'ЭИЭ'},
+        {text:'Когда процесс или аргументация нелогичны, бессвязны',fn:'Ti',win:'ИЭЭ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда разбираю проблему по полочкам, нахожу логику',fn:'Ti',win:'ЭИЭ'},
+        {text:'Когда уютно, вкусно поел, тело расслабилось',fn:'Si',win:'ИЭЭ'}
+      ]},
+  ],
+  'ЛСИ-СЛИ': [
+    { type:'pair', q:'Когда решаешь задачу, что для тебя важнее?',        a:{text:'Понять внутреннюю структуру и логику',fn:'Ti',win:'ЛСИ'}, b:{text:'Найти практичное решение, которое сработает',fn:'Te',win:'СЛИ'} },
+    { type:'pair', q:'Что для тебя более убедительно?',                    a:{text:'Чёткая аргументация и доказательства',fn:'Ti',win:'ЛСИ'}, b:{text:'Конкретные факты и цифры',fn:'Te',win:'СЛИ'} },
+    { type:'pair', q:'Ты лучше себя чувствуешь, когда…',                   a:{text:'Всё знакомо и комфортно',fn:'Si',win:'СЛИ'}, b:{text:'Надо действовать решительно и добиваться своего',fn:'Se',win:'ЛСИ'} },
+    { type:'pair', q:'Что для тебя важнее?',                                a:{text:'Качество жизни, уют, здоровье',fn:'Si',win:'СЛИ'}, b:{text:'Влияние, энергия, яркие ощущения',fn:'Se',win:'ЛСИ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Мне нравится раскладывать всё по полочкам, находить логику и чёткие взаимосвязи',fn:'Ti',win:'ЛСИ'},
+        {text:'Я умею продавливать решения, действовать решительно и брать своё',fn:'Se',win:'ЛСИ'},
+        {text:'Я ценю комфорт, уют и привычный уклад, мне важно качество жизни',fn:'Si',win:'СЛИ'},
+        {text:'Мне нравится делать дела, добиваться результата и видеть пользу от своих действий',fn:'Te',win:'СЛИ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда не вижу ни одного выхода, ни одной возможности',fn:'Ne',win:'ЛСИ'},
+        {text:'Когда вокруг мрачная атмосфера, нет радости и тепла',fn:'Fe',win:'СЛИ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда вокруг спокойно, радостно, оптимистично',fn:'Fe',win:'ЛСИ'},
+        {text:'Когда вижу новый выход, появляется возможность',fn:'Ne',win:'СЛИ'}
+      ]},
+  ],
+  'СЭИ-ЭСИ': [
+    { type:'pair', q:'В дружбе для тебя важнее…',                           a:{text:'Глубина — доверие, искренность, близость',fn:'Fi',win:'ЭСИ'}, b:{text:'Атмосфера — чтобы вместе было хорошо и легко',fn:'Fe',win:'СЭИ'} },
+    { type:'pair', q:'Что для тебя ценнее?',                                 a:{text:'Когда человек помнит мелочи о тебе',fn:'Fi',win:'ЭСИ'}, b:{text:'Когда человек поддерживает хорошую атмосферу',fn:'Fe',win:'СЭИ'} },
+    { type:'pair', q:'Ты лучше себя чувствуешь, когда…',                   a:{text:'Всё знакомо и комфортно',fn:'Si',win:'СЭИ'}, b:{text:'Надо действовать решительно и добиваться своего',fn:'Se',win:'ЭСИ'} },
+    { type:'pair', q:'Что для тебя важнее?',                                a:{text:'Качество жизни, уют, здоровье',fn:'Si',win:'СЭИ'}, b:{text:'Влияние, энергия, яркие ощущения',fn:'Se',win:'ЭСИ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Я ценю комфорт, уют и привычный уклад, мне важно качество жизни',fn:'Si',win:'СЭИ'},
+        {text:'Я создаю настроение вокруг, мне важно, чтобы всем было хорошо',fn:'Fe',win:'СЭИ'},
+        {text:'Для меня важны глубокая близость, доверие и искренность в отношениях',fn:'Fi',win:'ЭСИ'},
+        {text:'Я умею продавливать решения, действовать решительно и брать своё',fn:'Se',win:'ЭСИ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда всё вокруг бесполезно, нет результата и толку',fn:'Te',win:'СЭИ'},
+        {text:'Когда не вижу ни одного выхода, ни одной возможности',fn:'Ne',win:'ЭСИ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда вижу новый выход, появляется возможность',fn:'Ne',win:'СЭИ'},
+        {text:'Когда вижу конкретный результат и пользу',fn:'Te',win:'ЭСИ'}
+      ]},
+  ],
+  'ЛСЭ-СЛЭ': [
+    { type:'pair', q:'Когда решаешь задачу, что для тебя важнее?',        a:{text:'Понять внутреннюю структуру и логику',fn:'Ti',win:'СЛЭ'}, b:{text:'Найти практичное решение, которое сработает',fn:'Te',win:'ЛСЭ'} },
+    { type:'pair', q:'Что для тебя более убедительно?',                    a:{text:'Чёткая аргументация и доказательства',fn:'Ti',win:'СЛЭ'}, b:{text:'Конкретные факты и цифры',fn:'Te',win:'ЛСЭ'} },
+    { type:'pair', q:'Ты лучше себя чувствуешь, когда…',                   a:{text:'Всё знакомо и комфортно',fn:'Si',win:'ЛСЭ'}, b:{text:'Надо действовать решительно и добиваться своего',fn:'Se',win:'СЛЭ'} },
+    { type:'pair', q:'Что для тебя важнее?',                                a:{text:'Качество жизни, уют, здоровье',fn:'Si',win:'ЛСЭ'}, b:{text:'Влияние, энергия, яркие ощущения',fn:'Se',win:'СЛЭ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Я умею продавливать решения, действовать решительно и брать своё',fn:'Se',win:'СЛЭ'},
+        {text:'Мне нравится раскладывать всё по полочкам, находить логику и чёткие взаимосвязи',fn:'Ti',win:'СЛЭ'},
+        {text:'Мне нравится делать дела, добиваться результата и видеть пользу от своих действий',fn:'Te',win:'ЛСЭ'},
+        {text:'Я ценю комфорт, уют и привычный уклад, мне важно качество жизни',fn:'Si',win:'ЛСЭ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда меня не понимают глубоко, чувствую себя одиноким',fn:'Fi',win:'СЛЭ'},
+        {text:'Когда я не понимаю, к чему всё это идёт, что будет дальше',fn:'Ni',win:'ЛСЭ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда понимаю, зачем всё это было, вижу смысл',fn:'Ni',win:'СЛЭ'},
+        {text:'Когда меня любят и ценят',fn:'Fi',win:'ЛСЭ'}
+      ]},
+  ],
+  'СЭЭ-ЭСЭ': [
+    { type:'pair', q:'В дружбе для тебя важнее…',                           a:{text:'Глубина — доверие, искренность, близость',fn:'Fi',win:'СЭЭ'}, b:{text:'Атмосфера — чтобы вместе было хорошо и легко',fn:'Fe',win:'ЭСЭ'} },
+    { type:'pair', q:'Что для тебя ценнее?',                                 a:{text:'Когда человек помнит мелочи о тебе',fn:'Fi',win:'СЭЭ'}, b:{text:'Когда человек поддерживает хорошую атмосферу',fn:'Fe',win:'ЭСЭ'} },
+    { type:'pair', q:'Ты лучше себя чувствуешь, когда…',                   a:{text:'Всё знакомо и комфортно',fn:'Si',win:'ЭСЭ'}, b:{text:'Надо действовать решительно и добиваться своего',fn:'Se',win:'СЭЭ'} },
+    { type:'pair', q:'Что для тебя важнее?',                                a:{text:'Качество жизни, уют, здоровье',fn:'Si',win:'ЭСЭ'}, b:{text:'Влияние, энергия, яркие ощущения',fn:'Se',win:'СЭЭ'} },
+    { type:'association', q:'С чем ты больше всего себя ассоциируешь?',
+      options:[
+        {text:'Я создаю настроение вокруг, мне важно, чтобы всем было хорошо',fn:'Fe',win:'ЭСЭ'},
+        {text:'Я ценю комфорт, уют и привычный уклад, мне важно качество жизни',fn:'Si',win:'ЭСЭ'},
+        {text:'Я умею продавливать решения, действовать решительно и брать своё',fn:'Se',win:'СЭЭ'},
+        {text:'Для меня важны глубокая близость, доверие и искренность в отношениях',fn:'Fi',win:'СЭЭ'}
+      ]},
+    { type:'bolevaya', q:'Что ты хуже всего переносишь, даже когда дела идут хорошо и ты в ресурсе?',
+      options:[
+        {text:'Когда я не понимаю, к чему всё это идёт, что будет дальше',fn:'Ni',win:'ЭСЭ'},
+        {text:'Когда процесс или аргументация нелогичны, бессвязны',fn:'Ti',win:'СЭЭ'}
+      ]},
+    { type:'sugestivnaya', q:'Что тебя успокаивает и наполняет, когда дела идут плохо и ты не в ресурсе?',
+      options:[
+        {text:'Когда разбираю проблему по полочкам, нахожу логику',fn:'Ti',win:'ЭСЭ'},
+        {text:'Когда понимаю, зачем всё это было, вижу смысл',fn:'Ni',win:'СЭЭ'}
+      ]},
+  ],
+};
+
+let step = 1;          // 1 = I/E, 2 = S/N, 3 = T/F, 4 = Блок 2
+let qIndex = 0;
+let scoreI = 0, scoreE = 0, scoreS = 0, scoreN = 0, scoreT = 0, scoreF = 0;
+let candidates = [];
+let stepResults = []; // храним результаты каждого шага для показа
+
+// Блок 2
+let block2QuestionsList = [];
+let block2Scores = {};
+let block2Key = ''; // группа из 2 кандидатов
+
+function getGroupKey(a, b) {
+  return [a, b].sort().join('-');
+}
+
+function startTest() {
+  step = 1; qIndex = 0;
+  scoreI = 0; scoreE = 0; scoreS = 0; scoreN = 0; scoreT = 0; scoreF = 0;
+  candidates = []; stepResults = [];
+  block2QuestionsList = []; block2Scores = {}; block2Key = '';
+  document.getElementById('start').style.display = 'none';
+  document.getElementById('typeSelector').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('progress').style.display = 'block';
+  renderQuestion();
+}
+
+function showTypeSelector() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+  document.getElementById('start').style.display = 'none';
+  var grid = document.getElementById('typeGrid');
+  grid.innerHTML = '';
+  allTypes.forEach(function(t) {
+    var btn = document.createElement('button');
+    btn.innerHTML = '<span class="t-code">' + t.code + '</span><span class="t-nick">' + t.nick + '</span>';
+    btn.onclick = function() { showQuickResult(t.code); };
+    grid.appendChild(btn);
+  });
+  document.getElementById('typeSelector').style.display = 'block';
+}
+
+function showQuickResult(code) {
+  var type = allTypes.find(function(t) { return t.code === code; });
+  if (!type) return;
+  document.getElementById('typeSelector').style.display = 'none';
+  document.getElementById('result').innerHTML = buildResultHTML(type);
+  document.getElementById('result').style.display = 'block';
+}
+
+function renderQuestion() {
+  // Прогресс в виде кольца (как центральный круг в визуализации)
+  if (step === 1) {
+    const q = ieQuestions[qIndex];
+    renderProgress(0, 4, 'I / E', qIndex + 1, ieQuestions.length);
+    document.getElementById('quiz').innerHTML = `
+      <div class="question-block step-transition">
+        <p>${q.q}</p>
+        <div class="answers">
+          <button onclick="answer('i')">${q.i}</button>
+          <button onclick="answer('e')">${q.e}</button>
+        </div>
+      </div>`;
+  } else if (step === 2) {
+    const q = snQuestions[qIndex];
+    renderProgress(1, 4, 'S / N', qIndex + 1, snQuestions.length);
+    document.getElementById('quiz').innerHTML = `
+      <div class="question-block step-transition">
+        <p>${q.q}</p>
+        <div class="answers">
+          <button onclick="answer('${q.aKey}')">${q.a}</button>
+          <button onclick="answer('${q.bKey}')">${q.b}</button>
+        </div>
+      </div>`;
+  } else if (step === 3) {
+    const q = tfQuestions[qIndex];
+    renderProgress(2, 4, 'T / F', qIndex + 1, tfQuestions.length);
+    document.getElementById('quiz').innerHTML = `
+      <div class="question-block step-transition">
+        <p>${q.q}</p>
+        <div class="answers">
+          <button onclick="answer('${q.aKey}')">${q.a}</button>
+          <button onclick="answer('${q.bKey}')">${q.b}</button>
+        </div>
+      </div>`;
+  } else {
+    renderBlock2Question();
+  }
+}
+
+// === КОЛЬЦО ПРОГРЕССА ===
+// currentStepIdx — индекс текущего шага (0..3), total — 4, label — название шага
+function renderProgress(currentStepIdx, total, label, qNum, qTotal) {
+  // общий прогресс: шаги целиком + вопросы внутри текущего шага
+  // каждая фаза = 1/total; внутри шага — qNum/qTotal
+  let overall = currentStepIdx / total;
+  if (qNum && qTotal) overall += (1 / total) * (qNum / qTotal);
+  const pct = Math.round(overall * 100);
+
+  // длина окружности радиуса 30 ≈ 188.5
+  const C = 2 * Math.PI * 30;
+  const offset = C * (1 - overall);
+
+  const steps = [
+    { i:0, name:'I / E' },
+    { i:1, name:'S / N' },
+    { i:2, name:'T / F' },
+    { i:3, name:'Block 2' },
+  ];
+  const labelsHtml = steps.map(s => {
+    let cls = 'step-label';
+    if (s.i < currentStepIdx) cls += ' done';
+    if (s.i === currentStepIdx) cls += ' active';
+    return `<span class="${cls}">${s.name}</span>`;
+  }).join('');
+
+  document.getElementById('progress').innerHTML = `
+    <div class="progress-ring">
+      <div class="progress-ring-wrap">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle class="ring-track" cx="36" cy="36" r="30"></circle>
+          <circle class="ring-fill" cx="36" cy="36" r="30"
+            stroke-dasharray="${C.toFixed(2)}"
+            stroke-dashoffset="${offset.toFixed(2)}"></circle>
+        </svg>
+        <div class="ring-center" style="left:36px;top:36px;">
+          <div class="pct">${pct}%</div>
+          <div class="lbl">${label}</div>
+        </div>
+      </div>
+      <div class="step-labels">${labelsHtml}</div>
+    </div>
+  `;
+}
+
+// Перерисовка прогресса при переходе между вопросами внутри одного шага
+function refreshProgressForCurrent() {
+  if (step === 1) renderProgress(0, 4, 'I / E', qIndex + 1, ieQuestions.length);
+  else if (step === 2) renderProgress(1, 4, 'S / N', qIndex + 1, snQuestions.length);
+  else if (step === 3) renderProgress(2, 4, 'T / F', qIndex + 1, tfQuestions.length);
+  else renderProgress(3, 4, 'Block 2', qIndex + 1, block2QuestionsList.length);
+}
+
+function answer(choice) {
+  if (step === 1) {
+    if (choice === 'i') scoreI++; else scoreE++;
+  } else if (step === 2) {
+    if (choice === 's') scoreS++; else scoreN++;
+  } else if (step === 3) {
+    if (choice === 't') scoreT++; else scoreF++;
+  } else {
+    // Блок 2 — choice = код победителя
+    if (choice === candidates[0].code) block2Scores[candidates[0].code]++;
+    else block2Scores[candidates[1].code]++;
+    qIndex++;
+    if (qIndex < block2QuestionsList.length) {
+      renderBlock2Question();
+    } else {
+      showBlock2Result();
+    }
+    return;
+  }
+  qIndex++;
+
+  const total = step === 1 ? ieQuestions.length : step === 2 ? snQuestions.length : tfQuestions.length;
+  if (qIndex < total) {
+    renderQuestion();
+  } else {
+    endStep();
+  }
+}
+
+function endStep() {
+  if (step === 1) {
+    candidates = allTypes.filter(t => scoreI >= 2 ? t.ei === 'I' : t.ei === 'E');
+    showIEStepResult();
+  } else if (step === 2) {
+    if (scoreS >= 2) {
+      candidates = candidates.filter(t => isSensorType(t));
+    } else {
+      candidates = candidates.filter(t => isIntuitiveType(t));
+    }
+    showSNStepResult();
+  } else {
+    if (scoreT >= 2) {
+      candidates = candidates.filter(t => isLogicType(t));
+    } else {
+      candidates = candidates.filter(t => isEthicType(t));
+    }
+    showTFStepResult();
+  }
+}
+
+function showIEStepResult() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+
+  const isI = scoreI >= 2;
+  const label = isI ? 'интровертов' : 'экстравертов';
+
+  let html = `<div class="result-box step-transition" style="text-align:center;padding:20px 0;">
+    <h2 style="margin-bottom:8px;color:var(--ink-0);">Результат шага 1</h2>
+    <p style="font-size:14px;margin-bottom:6px;color:var(--ink-2);">I = ${scoreI} · E = ${scoreE}</p>
+    <p style="font-size:16px;font-weight:600;margin-bottom:16px;color:var(--ink-0);">
+      Ваш предполагаемый тип относится к группе <span style="color:var(--accent)">${label}</span>:
+    </p>
+    <ul style="list-style:none;padding:0;display:inline-block;text-align:left;">`;
+
+  candidates.forEach(t => {
+    html += `<li style="padding:3px 0;font-size:14px;color:var(--ink-1);"><strong style="color:var(--ink-0);">${t.code}</strong> — ${t.nick} (${t.full})</li>`;
+  });
+
+  html += `</ul>
+    <div style="margin-top:20px;">
+      <button style="padding:10px 28px;border:1px solid rgba(96,165,250,0.25);border-radius:var(--radius);background:rgba(96,165,250,0.08);color:var(--accent);font-size:14px;cursor:pointer;letter-spacing:0.03em;transition:background 220ms,border-color 220ms,transform 220ms;" onclick="goToStep2()" onmouseover="this.style.background='rgba(96,165,250,0.15)';this.style.borderColor='rgba(96,165,250,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='rgba(96,165,250,0.08)';this.style.borderColor='rgba(96,165,250,0.25)';this.style.transform='none'">Далее →</button>
+      <br><br>
+      <button class="restart-btn" onclick="location.reload()">Пройти заново</button>
+    </div>
+  </div>`;
+
+  document.getElementById('result').innerHTML = html;
+  document.getElementById('result').style.display = 'block';
+}
+
+function goToStep2() {
+  step = 2; qIndex = 0;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('progress').style.display = 'block';
+  renderQuestion();
+}
+
+function goToStep3() {
+  step = 3; qIndex = 0;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('progress').style.display = 'block';
+  renderQuestion();
+}
+
+function showSNStepResult() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+
+  const isS = scoreS >= 2;
+  const label = isS ? 'сенсориков' : 'интуитов';
+  const eiLabel = scoreI >= 2 ? 'интроверты' : 'экстраверты';
+
+  let html = `<div class="result-box step-transition" style="text-align:center;padding:20px 0;">
+    <h2 style="margin-bottom:8px;color:var(--ink-0);">Результат шага 2</h2>
+    <p style="font-size:14px;margin-bottom:6px;color:var(--ink-2);">S = ${scoreS} · N = ${scoreN}</p>
+    <p style="font-size:16px;font-weight:600;margin-bottom:16px;color:var(--ink-0);">
+      Ваш предполагаемый тип: <span style="color:var(--accent)">${eiLabel} · ${label}</span>:
+    </p>
+    <ul style="list-style:none;padding:0;display:inline-block;text-align:left;">`;
+
+  candidates.forEach(t => {
+    html += `<li style="padding:3px 0;font-size:14px;color:var(--ink-1);"><strong style="color:var(--ink-0);">${t.code}</strong> — ${t.nick} (${t.full})</li>`;
+  });
+
+  html += `</ul>
+    <div style="margin-top:20px;">
+      <button style="padding:10px 28px;border:1px solid rgba(96,165,250,0.25);border-radius:var(--radius);background:rgba(96,165,250,0.08);color:var(--accent);font-size:14px;cursor:pointer;letter-spacing:0.03em;transition:background 220ms,border-color 220ms,transform 220ms;" onclick="goToStep3()" onmouseover="this.style.background='rgba(96,165,250,0.15)';this.style.borderColor='rgba(96,165,250,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='rgba(96,165,250,0.08)';this.style.borderColor='rgba(96,165,250,0.25)';this.style.transform='none'">Далее →</button>
+      <br><br>
+      <button class="restart-btn" onclick="location.reload()">Пройти заново</button>
+    </div>
+  </div>`;
+
+  document.getElementById('result').innerHTML = html;
+  document.getElementById('result').style.display = 'block';
+}
+
+function showTFStepResult() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+
+  const isT = scoreT >= 2;
+  const label = isT ? 'логик' : 'этик';
+  const snLabel = scoreS >= 2 ? 'сенсорик' : 'интуит';
+  const eiLabel = scoreI >= 2 ? 'интроверт' : 'экстраверт';
+
+  let html = `<div class="result-box step-transition" style="text-align:center;padding:20px 0;">
+    <h2 style="margin-bottom:8px;color:var(--ink-0);">Блок 1 завершён</h2>
+    <p style="font-size:14px;margin-bottom:6px;color:var(--ink-2);">T = ${scoreT} · F = ${scoreF}</p>
+    <p style="font-size:16px;font-weight:600;margin-bottom:16px;color:var(--ink-0);">
+      Осталось 2 кандидата: <span style="color:var(--accent)">${eiLabel} · ${snLabel} · ${label}</span>:
+    </p>
+    <ul style="list-style:none;padding:0;display:inline-block;text-align:left;">`;
+
+  candidates.forEach(t => {
+    html += `<li style="padding:3px 0;font-size:14px;color:var(--ink-1);"><strong style="color:var(--ink-0);">${t.code}</strong> — ${t.nick} (${t.full})</li>`;
+  });
+
+  html += `</ul>
+    <div style="margin-top:20px;">
+      <button style="padding:10px 28px;border:1px solid rgba(96,165,250,0.25);border-radius:var(--radius);background:rgba(96,165,250,0.08);color:var(--accent);font-size:14px;cursor:pointer;letter-spacing:0.03em;transition:background 220ms,border-color 220ms,transform 220ms;" onclick="goToBlock2()" onmouseover="this.style.background='rgba(96,165,250,0.15)';this.style.borderColor='rgba(96,165,250,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='rgba(96,165,250,0.08)';this.style.borderColor='rgba(96,165,250,0.25)';this.style.transform='none'">Далее → Блок 2</button>
+      <br><br>
+      <button class="restart-btn" onclick="location.reload()">Пройти заново</button>
+    </div>
+  </div>`;
+
+  document.getElementById('result').innerHTML = html;
+  document.getElementById('result').style.display = 'block';
+}
+
+// === БЛОК 2 ===
+function goToBlock2() {
+  const key = getGroupKey(candidates[0].code, candidates[1].code);
+  block2Key = key;
+  block2QuestionsList = block2Questions[key];
+  block2Scores = {};
+  block2Scores[candidates[0].code] = 0;
+  block2Scores[candidates[1].code] = 0;
+  step = 4; qIndex = 0;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+  document.getElementById('progress').style.display = 'block';
+  renderBlock2Question();
+}
+
+function renderBlock2Question() {
+  const q = block2QuestionsList[qIndex];
+  const tot = block2QuestionsList.length;
+  renderProgress(3, 4, 'Block 2', qIndex + 1, tot);
+
+  if (q.type === 'pair') {
+    document.getElementById('quiz').innerHTML = `
+      <div class="question-block step-transition">
+        <p>${q.q}</p>
+        <div class="answers">
+          <button onclick="answerBlock2('${q.a.win}')">${q.a.text}</button>
+          <button onclick="answerBlock2('${q.b.win}')">${q.b.text}</button>
+        </div>
+      </div>`;
+  } else {
+    let optsHtml = q.options.map((o, i) =>
+      `<button onclick="answerBlock2('${o.win}')">${o.text}</button>`
+    ).join('');
+    document.getElementById('quiz').innerHTML = `
+      <div class="question-block step-transition">
+        <p>${q.q}</p>
+        <div class="bolivaya-options">${optsHtml}</div>
+      </div>`;
+  }
+}
+
+function answerBlock2(winner) {
+  block2Scores[winner]++;
+  qIndex++;
+  if (qIndex < block2QuestionsList.length) {
+    renderBlock2Question();
+  } else {
+    showBlock2Result();
+  }
+}
+
+function showBlock2Result() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+
+  const aCode = candidates[0].code;
+  const bCode = candidates[1].code;
+  const aScore = block2Scores[aCode];
+  const bScore = block2Scores[bCode];
+  const winnerCode = aScore >= bScore ? aCode : bCode;
+  const winner = candidates.find(t => t.code === winnerCode);
+
+  document.getElementById('result').innerHTML = buildResultHTML(winner) + `
+    <p style="font-size:13px;margin:18px 0 4px;color:var(--ink-2);text-align:center;">
+      Счёт по блоку 2: ${aCode} ${aScore} · ${bCode} ${bScore}
+    </p>`;
+  document.getElementById('result').style.display = 'block';
+}
+
+function buildResultHTML(type) {
+  const quadKey = TYPE_QUAD[type.code] || 'delta';
+  const quad = QUAD[quadKey];
+  const posLabels = ['1 — базовая','2 — творческая','3 — социальная маска','4 — болевая','5 — внушение','6 — ободряющая','7 — игнорируемая','8 — демонстративная'];
+
+  // Строим орбиту: 8 узлов вокруг центрального круга типа
+  const orbit = buildOrbitHTML(type, posLabels);
+
+  return `<div class="result-box" style="text-align:center;padding:20px 0;animation:fadeUp 500ms cubic-bezier(.2,.7,.2,1);">
+    <h2 style="margin-bottom:6px;color:var(--ink-0);font-size:22px;letter-spacing:0.02em;">Ваш тип определён</h2>
+    <p style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:18px;">квадра · ${quadKey}</p>
+
+    <div class="orbit-wrap" style="--quad-accent:${quad.accent};" id="orbitWrap">
+      <svg class="orbit-links" id="orbitLinks" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">${orbit.linksSvg}</svg>
+      <div class="orbit-center" style="background:radial-gradient(circle at 30% 30%, ${quad.accent} 0%, rgba(0,0,0,0.55) 70%);">
+        <div>${type.code}<span class="small">${type.nick}</span></div>
+      </div>
+      <div id="orbitNodes">${orbit.nodesHtml}</div>
+    </div>
+
+    <div class="orbit-legend" style="max-width:520px;margin:4px auto 24px;">
+      <span class="item"><span class="dot" style="background:var(--green)"></span> сильная (развиваем)</span>
+      <span class="item"><span class="dot" style="background:var(--red);opacity:0.7"></span> слабая (минимизируем)</span>
+    </div>
+
+    <div style="text-align:left;max-width:520px;margin:0 auto 20px;padding:16px 20px;background:var(--card-bg);border:1px solid var(--line);border-radius:var(--radius);font-size:15px;line-height:1.7;color:var(--ink-1);">
+      ${typeDescriptions[type.code]}
+    </div>
+
+    <div style="text-align:left;max-width:520px;margin:0 auto 20px;">
+      <div style="font-weight:600;font-size:14px;letter-spacing:0.04em;margin-bottom:10px;color:var(--ink-0);">📊 Ваши функции</div>
+      <div style="font-size:12px;color:var(--ink-2);margin-bottom:12px;">Сильные (позиции 1, 2, 7, 8) — развиваем, слабые (3, 4, 5, 6) — минимизируем влияние.</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tr style="border-bottom:1px solid var(--line);">
+          <th style="text-align:left;padding:8px 4px;color:var(--ink-2);font-weight:500;letter-spacing:0.04em;">Позиция</th>
+          <th style="text-align:left;padding:8px 4px;color:var(--ink-2);font-weight:500;letter-spacing:0.04em;">Функция</th>
+          <th style="text-align:center;padding:8px 4px;color:var(--ink-2);font-weight:500;letter-spacing:0.04em;">Статус</th>
+        </tr>
+        ${type.stack.map((fn, i) => {
+          const isStrong = i < 2 || i > 5;
+          const weakStatus = {2:'⚡ Социальная маска',3:'⚡ Болевая',4:'⚡ Внушение',5:'⚡ Ободряющая'};
+          const strongStatus = {0:'✅ Базовая',1:'✅ Творческая',6:'✅ Игнорируемая',7:'✅ Демонстративная'};
+          const status = isStrong ? strongStatus[i] : weakStatus[i];
+          const style = isStrong ? 'color:var(--green);' : 'color:var(--red);';
+          return `<tr style="border-bottom:1px solid var(--line);">
+            <td style="padding:6px 4px;color:var(--ink-1);">${posLabels[i]}</td>
+            <td style="padding:6px 4px;color:var(--ink-0);">${fnTraits[fn].name}</td>
+            <td style="padding:6px 4px;text-align:center;${style}">${status}</td>
+          </tr>`;
+        }).join('')}
+      </table>
+    </div>
+
+    <button style="display:block;margin:0 auto 8px;padding:12px 28px;border:1px solid rgba(52,211,153,0.25);border-radius:var(--radius);background:rgba(52,211,153,0.08);color:var(--green);font-size:14px;cursor:pointer;letter-spacing:0.03em;transition:border-color 220ms,background 220ms,transform 220ms;" onclick="showPlan('${type.code}')" onmouseover="this.style.borderColor='rgba(52,211,153,0.5)';this.style.background='rgba(52,211,153,0.15)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(52,211,153,0.25)';this.style.background='rgba(52,211,153,0.08)';this.style.transform='none'">📋 Составить план развития</button>
+    <br>
+    <button class="restart-btn" onclick="location.reload()">Пройти заново</button>
+  </div>`;
+}
+
+// === ОРБИТА ФУНКЦИЙ ===
+function buildOrbitHTML(type, posLabels) {
+  // 8 узлов вокруг центрального круга. ViewBox 400×400, центр (200,200), R = 150.
+  const cx = 200, cy = 200, R = 150;
+  const sides = 8;
+
+  // Сильные позиции 1,2,7,8 (i=0,1,6,7) — зелёные, медленный пульс (4с)
+  // Слабые позиции 3,4,5,6 (i=2,3,4,5) — красные, быстрый пульс (2.2с)
+  let linksSvg = '';
+  let nodesHtml = '';
+
+  for (let i = 0; i < sides; i++) {
+    const angle = (Math.PI * 2 * i / sides) - Math.PI / 2;
+    const x = cx + R * Math.cos(angle);
+    const y = cy + R * Math.sin(angle);
+
+    const isStrong = i < 2 || i > 5;
+    const color = isStrong ? '#34d399' : '#f87171';
+    const pulse = isStrong ? (4 + (i % 2) * 0.4) : 2.2;
+    const fn = type.stack[i];
+
+    // SVG-координаты в viewBox 400×400, контейнер резиновый — строки масштабируются автоматически
+    linksSvg += `<line class="orbit-link ${isStrong ? 'strong' : 'weak'}"
+      x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"
+      stroke="${color}" style="--pulse:${pulse}s;"></line>`;
+
+    // Узлы — абсолютное позиционирование, left/top в % от размеров контейнера
+    nodesHtml += `<div class="orbit-node ${isStrong ? 'strong' : 'weak'}"
+      style="left:${(x / 4).toFixed(2)}%;top:${(y / 4).toFixed(2)}%;animation-delay:${i * 60}ms;">
+      <div><span class="code">${fn}</span><span class="pos">${posLabels[i].split(' — ')[0]}</span></div>
+    </div>`;
+  }
+
+  return { linksSvg, nodesHtml };
+}
+
+// === ПЛАН РАЗВИТИЯ ===
+let planLevels = {}; // { 'Ti': 2, 'Ne': 3, ... }
+let planType = null; // текущий тип для плана
+
+function showPlan(code) {
+  const type = allTypes.find(t => t.code === code);
+  if (!type) return;
+  planType = type;
+  planLevels = {};
+  const modal = document.getElementById('planModal');
+  const body = document.getElementById('planBody');
+  const chartSection = document.getElementById('chartSection');
+  chartSection.style.display = 'none';
+
+  let html = `<div class="principle">
+    <strong>Принцип:</strong> Сильные функции (позиции 1, 2, 7, 8) — оцениваем уровень и развиваем.
+    Слабые (позиции 3, 4, 5, 6) — не развиваем, только минимизируем влияние.
+  </div>
+  <p style="font-size:14px;color:var(--ink-2);margin-bottom:16px;">
+    Для каждой функции выберите уровень (1–4), который, на ваш взгляд, лучше всего описывает её текущее состояние.
+  </p>`;
+
+  type.stack.forEach((fn, i) => {
+    const ld = levelData[fn];
+    const isStrong = i < 2 || i > 5;
+    const posLabel = ['1 — базовая','2 — творческая','3 — социальная маска','4 — болевая','5 — внушение','6 — ободряющая','7 — игнорируемая','8 — демонстративная'][i];
+    const goal = isStrong ? 'Развиваем до следующего уровня' : 'Минимизируем влияние';
+    const roleStatus = {0:'✅ Базовая',1:'✅ Творческая',2:'⚡ Социальная маска',3:'⚡ Болевая',4:'⚡ Внушение',5:'⚡ Ободряющая',6:'✅ Игнорируемая',7:'✅ Демонстративная'};
+
+    html += `<div class="fn-block ${isStrong ? 'strong' : 'weak'}">
+      <div class="fn-title">${ld.name} <span style="font-weight:400;font-size:13px;color:#888;">(${posLabel})</span></div>
+      <div class="fn-pos">${roleStatus[i]} · ${goal}</div>
+      <div class="fn-desc">${ld.desc}</div>
+      <div class="levels-row">`;
+
+    ld.levels.forEach((desc, li) => {
+      html += `<div class="level-btn" onclick="selectLevel('${fn}', ${li})" id="lvl-${fn}-${li}">
+        <span class="level-num">${li + 1}</span>
+        <span class="level-name">${levelNames[li]}</span>
+        <span class="level-short">${desc.substring(0, 50)}${desc.length > 50 ? '…' : ''}</span>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  html += `<div class="modal-actions">
+    <button class="primary" onclick="showChart('${type.code}')">Показать график</button>
+  </div>`;
+
+  body.innerHTML = html;
+  modal.classList.add('open');
+}
+
+function selectLevel(fn, level) {
+  planLevels[fn] = level;
+  document.querySelectorAll(`[id^="lvl-${fn}-"]`).forEach(el => el.classList.remove('selected'));
+  document.getElementById(`lvl-${fn}-${level}`).classList.add('selected');
+}
+
+function showChart(code) {
+  const type = allTypes.find(t => t.code === code);
+  if (!type) return;
+  const canvas = document.getElementById('radarChart');
+  const ctx = canvas.getContext('2d');
+  const chartSection = document.getElementById('chartSection');
+  const legend = document.getElementById('chartLegend');
+
+  const w = canvas.width = 360;
+  const h = canvas.height = 360;
+  const cx = w / 2, cy = h / 2;
+  const r = 140;
+  const sides = 8;
+  ctx.clearRect(0, 0, w, h);
+
+  const fnList = type.stack;
+  const colors = fnList.map((fn, i) => {
+    const isStrong = i < 2 || i > 5;
+    return isStrong ? '#34d399' : '#f87171';
+  });
+
+  // Grid concentric rings
+  for (let ring = 1; ring <= 4; ring++) {
+    const rr = r * ring / 4;
+    ctx.beginPath();
+    for (let i = 0; i <= sides; i++) {
+      const angle = Math.PI * 2 * i / sides - Math.PI / 2;
+      const x = cx + rr * Math.cos(angle);
+      const y = cy + rr * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#3a4865';
+    ctx.lineWidth = 0.7;
+    ctx.stroke();
+  }
+
+  // Axis lines
+  for (let i = 0; i < sides; i++) {
+    const angle = Math.PI * 2 * i / sides - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r * Math.cos(angle), cy + r * Math.sin(angle));
+    ctx.strokeStyle = '#3a4865';
+    ctx.lineWidth = 0.7;
+    ctx.stroke();
+
+    const val = planLevels[fnList[i]] !== undefined ? planLevels[fnList[i]] + 1 : 1;
+    const labelR = r + 18;
+    const lx = cx + labelR * Math.cos(angle);
+    const ly = cy + labelR * Math.sin(angle);
+    ctx.fillStyle = colors[i];
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(fnList[i], lx, ly);
+  }
+
+  // === ПЛАВНАЯ АНИМАЦИЯ ПОЛИГОНА (через requestAnimationFrame) ===
+  // 1) Сначала — пустой (заливка 0) — мгновенно
+  // 2) Затем — растёт из центра до финальных значений за 700мс
+  const startTime = performance.now();
+  const duration = 700;
+
+  function drawFrame(now) {
+    const t = Math.min(1, (now - startTime) / duration);
+    // easing cubic-bezier(.2,.7,.2,1) ≈ ease-out
+    const eased = 1 - Math.pow(1 - t, 3);
+
+    ctx.clearRect(0, 0, w, h);
+    // Перерисовываем сетку и оси (т.к. clearRect всё стёр)
+    for (let ring = 1; ring <= 4; ring++) {
+      const rr = r * ring / 4;
+      ctx.beginPath();
+      for (let i = 0; i <= sides; i++) {
+        const angle = Math.PI * 2 * i / sides - Math.PI / 2;
+        const x = cx + rr * Math.cos(angle);
+        const y = cy + rr * Math.sin(angle);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#3a4865';
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    }
+    for (let i = 0; i < sides; i++) {
+      const angle = Math.PI * 2 * i / sides - Math.PI / 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + r * Math.cos(angle), cy + r * Math.sin(angle));
+      ctx.strokeStyle = '#3a4865';
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+
+      const val = planLevels[fnList[i]] !== undefined ? planLevels[fnList[i]] + 1 : 1;
+      const labelR = r + 18;
+      const lx = cx + labelR * Math.cos(angle);
+      const ly = cy + labelR * Math.sin(angle);
+      ctx.fillStyle = colors[i];
+      ctx.font = '11px system-ui';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(fnList[i], lx, ly);
+    }
+
+    // Полигон: точки интерполируются к финальному значению
+    ctx.beginPath();
+    for (let i = 0; i <= sides; i++) {
+      const idx = i % sides;
+      const val = planLevels[fnList[idx]] !== undefined ? planLevels[fnList[idx]] + 1 : 1;
+      const finalDist = r * val / 4;
+      const dist = finalDist * eased;
+      const angle = Math.PI * 2 * idx / sides - Math.PI / 2;
+      const x = cx + dist * Math.cos(angle);
+      const y = cy + dist * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(96, 165, 250, ' + (0.15 * eased).toFixed(3) + ')';
+    ctx.fill();
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Точки: появляются по очереди после полигона (за последние 300мс)
+    for (let i = 0; i < sides; i++) {
+      const dotStart = (i / sides) * 0.4 + 0.5; // 0.5..0.9
+      const dotT = Math.max(0, Math.min(1, (t - dotStart) / 0.1));
+      if (dotT <= 0) continue;
+      const val = planLevels[fnList[i]] !== undefined ? planLevels[fnList[i]] + 1 : 1;
+      const dist = r * val / 4 * eased;
+      const angle = Math.PI * 2 * i / sides - Math.PI / 2;
+      const x = cx + dist * Math.cos(angle);
+      const y = cy + dist * Math.sin(angle);
+      ctx.beginPath();
+      ctx.arc(x, y, 4 * dotT, 0, Math.PI * 2);
+      ctx.fillStyle = colors[i];
+      ctx.globalAlpha = dotT;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    if (t < 1) requestAnimationFrame(drawFrame);
+  }
+  requestAnimationFrame(drawFrame);
+
+  // Legend
+  let legendHtml = '<div style="font-weight:600;margin-bottom:6px;">Условные обозначения:</div>';
+  fnList.forEach((fn, i) => {
+    const ld = levelData[fn];
+    const val = planLevels[fn] !== undefined ? planLevels[fn] + 1 : '—';
+    legendHtml += `<span><span class="dot" style="background:${colors[i]}"></span> ${fn} (${ld.name}) — ур. ${val}</span>`;
+  });
+  legend.innerHTML = legendHtml;
+
+  chartSection.style.display = 'block';
+}
+
+function generatePlan() {
+  const type = planType;
+  if (!type) return;
+  const el = document.getElementById('planResult');
+  const strongIndices = [0, 1, 6, 7]; // позиции 1, 2, 7, 8
+  const monthNames = ['первый','второй','третий','четвёртый'];
+  const levelAdvice = {
+    0:'Вы на начальном уровне. Следующий шаг — пробовать применять эту функцию осознанно в простых ситуациях.',
+    1:'У вас базовый уровень. Чтобы расти, берите небольшие задачи, где эта функция нужна, и практикуйтесь регулярно.',
+    2:'Хороший уровень. Чтобы выйти на творческий, пробуйте нестандартные подходы и учите других.',
+    3:'Отличный уровень! Поддерживайте его — делитесь опытом, берите сложные проекты.'
+  };
+
+  let html = '<hr style="margin:16px 0;border:none;border-top:1px solid var(--line);">';
+  html += '<h3 style="font-size:16px;margin-bottom:12px;color:var(--ink-0);">📅 План на 4 месяца</h3>';
+  html += '<p style="font-size:13px;color:var(--ink-2);margin-bottom:12px;">Каждый месяц работаем над одной сильной функцией.</p>';
+
+  strongIndices.forEach((idx, mi) => {
+    const fn = type.stack[idx];
+    const ld = levelData[fn];
+    const current = planLevels[fn] !== undefined ? planLevels[fn] + 1 : 1;
+    const next = Math.min(current + 1, 4);
+    const posLabel = ['базовая','творческая','игнорируемая','демонстративная'][mi];
+
+    html += `<div style="margin-bottom:14px;padding:10px 14px;background:var(--card-bg);border:var(--card-border);border-radius:var(--radius);border-left:3px solid var(--green);">
+      <div style="font-weight:600;font-size:14px;color:var(--ink-0);">Месяц ${mi + 1} — ${posLabel} (${ld.name})</div>
+      <div style="font-size:13px;color:var(--ink-1);margin:4px 0;">Текущий уровень: ${current} · Цель: уровень ${next}</div>
+      <div style="font-size:13px;color:var(--ink-1);">${levelAdvice[current - 1]}</div>
+    </div>`;
+  });
+
+  html += '<p style="font-size:12px;color:var(--ink-2);margin-top:8px;">💡 Через 4 месяца пройдите тест заново и оцените прогресс.</p>';
+
+  el.innerHTML = html;
+  el.style.display = 'block';
+}
+
+function downloadChartImage() {
+  var canvas = document.getElementById('radarChart');
+  var dataUrl = canvas.toDataURL('image/png');
+  var a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = 'график_развития.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function downloadFile(filename) {
+  var url = filename;
+  if (filename === 'Упражнения_по_функциям.pdf' && typeof pdfDataUrl !== 'undefined') {
+    url = pdfDataUrl;
+  }
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function closePlan() {
+  document.getElementById('planModal').classList.remove('open');
+}
+
+function closeModalOnOverlay(e) {
+  if (e.target === e.currentTarget) closePlan();
+}
+</script>
+
+<!-- Модальное окно плана развития -->
+<div id="planModal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closePlan()">&times;</button>
+    <h2>План развития</h2>
+    <div id="planBody"></div>
+    <div id="chartSection" class="chart-section">
+      <hr style="margin:16px 0;border:none;border-top:1px solid #e8e8e8;">
+      <h3 style="font-size:16px;margin-bottom:10px;">График развития функций на текущий момент</h3>
+      <canvas id="radarChart"></canvas>
+      <div id="chartLegend" class="fn-legend"></div>
+      <p style="font-size:14px;color:var(--ink-2);margin:12px 0 4px;">📸 Нажмите «Сохранить изображение», чтобы скачать график как картинку</p>
+      <div class="modal-actions" style="margin-top:8px;">
+        <button class="primary" onclick="generatePlan()">Составить план на 4 месяца</button>
+        <button onclick="downloadChartImage()">🖼 Сохранить изображение</button>
+      </div>
+      <div id="planResult" style="display:none;margin-top:16px;text-align:left;"></div>
+      <div class="modal-actions" style="margin-top:12px;">
+        <button onclick="downloadFile('Календарь_упражнений.xlsx')">📥 Excel-трекер</button>
+        <button onclick="downloadFile('Упражнения_по_функциям.pdf')">📥 PDF-инструкция</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
